@@ -64,15 +64,19 @@ function init() {//this function is for starting the app
     })
 }
 
+function clearUsers() {
+    document.getElementById("usersTable").innerHTML = "";
+}
 
 function draw(arrayOfUsers, tableBody) {
-    tableBody.innerHTML = ""
+    clearUsers()
     for (let index = 0; index < arrayOfUsers.length; index++) {
         tableBody.append(getUserRowUI(arrayOfUsers[index]))
         // table  <=     // row       // data
     }
     // const usersRows = arrayOfUsers.map((currentUser) => getUserRowUI(currentUser))
     // tableBody.append(...usersRows)
+    updateSelectedUsers(arrayOfUsers.filter(user => user.isSelected === true))
 
 }
 
@@ -127,23 +131,26 @@ function getUserRowUI(user) {
 
 }
 
+function updateSelectedUsers(arrayOfSelectedUsers) {
+    const selectedUsersContainer = document.getElementById("selectedUsersNumber")
+    selectedUsersContainer.innerText = arrayOfSelectedUsers.length
+}
+
 init()
 
-//select:
-// const button = document.createElement("button");
-// button.classList.add("btn", "btn-primary")
-// if (bookData.isSelected === true) {
-//     button.innerText = "UnSelect"
-//     bookContainerDiv.style.background = "yellow"
-// } else {
-//     button.innerText = "Select"
-//     bookContainerDiv.style.background = "pink"
-// }
-// button.addEventListener("click", function () {
-//     if (bookData.isSelected === true) {
-//         bookData.isSelected = false;
-//     } else {
-//         bookData.isSelected = true
-//     }
-//     draw(books)
-// })
+
+// const deleteUserBtn = document.createElement("button")
+//     deleteUserBtn.classList.add("btnDelete", "btn-danger")
+//     deleteUserBtn.innerText = "Delete"
+//     deleteUserBtn.addEventListener("click", function () {
+
+//         const firstName = user.name.first
+//         //const lastName = user.name.last
+//         const foundIndex = users.findIndex(user => user.name.first.toLowerCase() === firstName.toLowerCase());
+//         console.log(foundIndex);
+//         if (foundIndex > -1) {
+//             users.splice(foundIndex, 1);
+
+//         }
+//         draw(users, tableBody)
+//     });
