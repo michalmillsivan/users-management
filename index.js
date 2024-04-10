@@ -49,18 +49,18 @@ function init() {//this function is for starting the app
     // to access it we are resuming the same proccess:
     const resetButton = document.getElementById("reset");
     resetButton.addEventListener("click", function () {
-    draw(users, tableBody);
+        draw(users, tableBody);
     })
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     const searchButton = document.getElementById("searchButton")
-    searchButton.addEventListener("click", function(){
-    const input = document.getElementById("searchInput")
-    const searchValue = input.value
-    const filterdUsers = users.filter(user => user.name.first.toLowerCase().includes(searchValue.toLowerCase()))
-    draw(filterdUsers, tableBody)
-    document.getElementById("searchInput").value = ""
+    searchButton.addEventListener("click", function () {
+        const input = document.getElementById("searchInput")
+        const searchValue = input.value
+        const filterdUsers = users.filter(user => user.name.first.toLowerCase().includes(searchValue.toLowerCase()))
+        draw(filterdUsers, tableBody)
+        document.getElementById("searchInput").value = ""
     })
 }
 
@@ -104,17 +104,46 @@ function getUserRowUI(user) {
     tdCountry.innerText = user?.location?.country
 
     const tdImage = document.createElement("td")
+
     const imgUser = document.createElement("img")
     imgUser.classList.add("user-image")
     imgUser.src = user?.picture?.large
     tdImage.append(imgUser)
 
+    const tdselect = document.createElement("button")
+    tdselect.classList.add("btn", "btn-primary")
+    tdselect.innerText = user.isSelected ? "Unselect" : "Select";
+    tdselect.addEventListener("click", function () {
+        user.isSelected = !user.isSelected
+        tdselect.innerText = user.isSelected ? "Unselect" : "Select";
+        trUser.style.background = "yellow"
+        trUser.style.background = user.isSelected ? "yellow" : "white"
+    })
+
     const trUser = document.createElement("tr")
-    trUser.append(tdId, tdFirstName, tdLastName, tdEmail, tdPhone, tdAge, tdGender, tdImage, tdCountry)
+    trUser.append(tdId, tdFirstName, tdLastName, tdEmail, tdPhone, tdAge, tdGender, tdImage, tdCountry, tdselect)
 
     return trUser
 
 }
 
-
 init()
+
+//select:
+// const button = document.createElement("button");
+// button.classList.add("btn", "btn-primary")
+// if (bookData.isSelected === true) {
+//     button.innerText = "UnSelect"
+//     bookContainerDiv.style.background = "yellow"
+// } else {
+//     button.innerText = "Select"
+//     bookContainerDiv.style.background = "pink"
+// }
+// button.addEventListener("click", function () {
+//     if (bookData.isSelected === true) {
+//         bookData.isSelected = false;
+//     } else {
+//         bookData.isSelected = true
+//     }
+//     draw(books)
+// })
